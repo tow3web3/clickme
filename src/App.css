@@ -1,0 +1,470 @@
+/* === RETRO MAC OS THEME === */
+
+.desktop {
+  min-height: 100vh;
+  background: #fff;
+  background-image:
+    linear-gradient(45deg, #eee 25%, transparent 25%),
+    linear-gradient(-45deg, #eee 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #eee 75%),
+    linear-gradient(-45deg, transparent 75%, #eee 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px 20px;
+  font-family: 'Space Mono', 'Chicago', 'Geneva', monospace;
+}
+
+.windows-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 900px;
+  width: 100%;
+}
+
+.main-window {
+  flex: 1;
+  min-width: 320px;
+  max-width: 520px;
+}
+
+.leaderboard-window {
+  flex: 0 0 300px;
+  min-width: 260px;
+}
+
+/* Menu bar */
+.menu-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: #fff;
+  border-bottom: 2px solid #000;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 16px;
+  z-index: 100;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.menu-bar .apple {
+  font-size: 14px;
+}
+
+.menu-bar span {
+  cursor: default;
+}
+
+/* Window */
+.window {
+  background: #fff;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 #000;
+  width: 100%;
+  max-width: 520px;
+  position: relative;
+  margin-top: 24px;
+}
+
+.title-bar {
+  background: #fff;
+  border-bottom: 2px solid #000;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+  height: 24px;
+}
+
+/* Horizontal lines pattern in title bar */
+.title-bar-lines {
+  flex: 1;
+  height: 12px;
+  background: repeating-linear-gradient(
+    0deg,
+    #000 0px,
+    #000 1px,
+    #fff 1px,
+    #fff 3px
+  );
+}
+
+.title-bar-text {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 0 8px;
+  background: #fff;
+}
+
+.close-box {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #000;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+/* Window body */
+.window-body {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* Ticker */
+.ticker {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 700;
+  color: #000;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #000;
+  margin-top: 4px;
+}
+
+/* Separator line */
+.sep {
+  width: 100%;
+  height: 1px;
+  background: #000;
+  margin: 20px 0;
+}
+
+/* Tagline */
+.tagline {
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.9;
+  color: #000;
+}
+
+.tagline em {
+  font-style: normal;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Counter section */
+.counter-section {
+  margin-top: 24px;
+  text-align: center;
+  padding: 16px 24px;
+  border: 2px solid #000;
+  background: #fff;
+  width: 100%;
+}
+
+.counter-number {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700;
+  color: #000;
+  letter-spacing: -0.02em;
+  transition: transform 0.1s;
+}
+
+.counter-number.bump {
+  transform: scale(1.06);
+}
+
+.counter-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #000;
+  margin-top: 4px;
+}
+
+/* The Button — classic Mac style */
+.click-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 12px 48px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 24px;
+  position: relative;
+  box-shadow: 2px 2px 0 #000;
+  transition: all 0.08s;
+}
+
+.click-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+.click-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 #000;
+}
+
+.sub-cta {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #000;
+  letter-spacing: 0.1em;
+  text-align: center;
+  font-weight: 400;
+}
+
+/* Stats row */
+.stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.stat {
+  text-align: center;
+  flex: 1;
+  padding: 12px 8px;
+  border: 1px solid #000;
+}
+
+.stat-num {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+}
+
+.stat-label {
+  font-size: 9px;
+  color: #000;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Status bar at bottom of window */
+.status-bar {
+  border-top: 2px solid #000;
+  padding: 4px 8px;
+  font-size: 10px;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Ripple — kept subtle for retro vibe */
+.ripple-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #000;
+  opacity: 0;
+  transform: scale(0);
+  animation: rippleOut 0.5s ease-out forwards;
+}
+
+@keyframes rippleOut {
+  0% { opacity: 0.5; transform: scale(0); }
+  100% { opacity: 0; transform: scale(4); }
+}
+
+/* Floating particles */
+.particle {
+  position: fixed;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #000;
+  pointer-events: none;
+  z-index: 201;
+  animation: particleUp 0.8s ease-out forwards;
+}
+
+@keyframes particleUp {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(0.7); }
+}
+
+/* Pulse animation on counter loading */
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Name input */
+.name-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.name-input {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  padding: 6px 10px;
+  flex: 1;
+  outline: none;
+}
+
+.name-input::placeholder {
+  color: #999;
+}
+
+.name-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  padding: 6px 14px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.name-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+.user-info {
+  margin-top: 16px;
+  font-size: 11px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.user-info:hover {
+  color: #000;
+}
+
+/* Leaderboard */
+.leaderboard-header {
+  display: grid;
+  grid-template-columns: 30px 1fr 60px 60px;
+  padding: 6px 10px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 2px solid #000;
+  background: #f0f0f0;
+}
+
+.leaderboard-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 30px 1fr 60px 60px;
+  padding: 6px 10px;
+  font-size: 11px;
+  border-bottom: 1px solid #ddd;
+  transition: background 0.1s;
+}
+
+.leaderboard-row:hover {
+  background: #f5f5f5;
+}
+
+.leaderboard-row.top-three {
+  font-weight: 700;
+}
+
+.lb-rank {
+  color: #999;
+}
+
+.lb-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lb-clicks {
+  text-align: right;
+  font-weight: 700;
+}
+
+.lb-time {
+  text-align: right;
+  color: #999;
+  font-size: 10px;
+}
+
+.leaderboard-empty {
+  padding: 24px;
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+}
+
+/* Scrollbar retro style */
+.leaderboard-body::-webkit-scrollbar {
+  width: 14px;
+}
+
+.leaderboard-body::-webkit-scrollbar-track {
+  background: #fff;
+  border-left: 1px solid #000;
+}
+
+.leaderboard-body::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border: 1px solid #000;
+}
+
+@media (max-width: 700px) {
+  .windows-row { flex-direction: column; align-items: center; }
+  .leaderboard-window { flex: none; width: 100%; max-width: 520px; }
+}
+
+@media (max-width: 480px) {
+  .window-body { padding: 24px 16px; }
+  .stats { gap: 12px; }
+  .click-btn { padding: 10px 32px; }
+  .menu-bar { font-size: 11px; gap: 10px; }
+}
