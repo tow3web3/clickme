@@ -384,6 +384,7 @@ function App() {
 
               <div className="status-bar">
                 <span>not financial advice. just click.</span>
+                <a href="https://x.com/_Click_me" target="_blank" rel="noopener noreferrer" className="x-link">𝕏</a>
                 <span>{formatNumber(count)} clicks</span>
               </div>
             </div>
