@@ -48,6 +48,16 @@ function App() {
   const [showNameInput, setShowNameInput] = useState(!getUserName())
   const [nameValue, setNameValue] = useState(getUserName())
   const [activeTab, setActiveTab] = useState('readme')
+  const [introPhase, setIntroPhase] = useState('start') // start, sliding, clicking, ripple, done
+
+  // Intro animation sequence — runs once on mount
+  useEffect(() => {
+    const t1 = setTimeout(() => setIntroPhase('sliding'), 200)       // cursor starts moving
+    const t2 = setTimeout(() => setIntroPhase('clicking'), 1800)    // cursor presses down
+    const t3 = setTimeout(() => setIntroPhase('ripple'), 2300)      // shockwave + flash
+    const t4 = setTimeout(() => setIntroPhase('done'), 3100)        // site opens
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
+  }, [])
   const particleId = useRef(0)
   const rippleId = useRef(0)
   const uid = useRef(getUid())
@@ -152,6 +162,37 @@ function App() {
 
   return (
     <>
+      {/* Intro Animation */}
+      {introPhase !== 'done' && (
+        <div className="intro-overlay" onClick={() => setIntroPhase('done')}>
+          {/* Click target word */}
+          <div className={`intro-target ${introPhase}`}>
+            CLICK
+          </div>
+
+          {/* Mouse cursor — starts off-screen left, slides to the word, clicks */}
+          <div className={`intro-cursor ${introPhase}`}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M5 3L19 12L12 13L15 21L12 22L9 14L5 17V3Z" fill="#000" stroke="#fff" strokeWidth="0.8"/>
+            </svg>
+          </div>
+
+          {/* Shockwave rings on click */}
+          {(introPhase === 'clicking' || introPhase === 'ripple') && (
+            <>
+              <div className="intro-shockwave ring1" />
+              <div className="intro-shockwave ring2" />
+              <div className="intro-shockwave ring3" />
+            </>
+          )}
+
+          {/* Flash */}
+          <div className={`intro-flash ${introPhase === 'ripple' ? 'active' : ''}`} />
+
+          <div className="intro-skip">click anywhere to skip</div>
+        </div>
+      )}
+
       {/* Ripples */}
       <div className="ripple-container">
         {ripples.map(r => (

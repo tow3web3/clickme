@@ -1,3 +1,170 @@
+/* === INTRO ANIMATION === */
+
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Click target text — always centered */
+.intro-target {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 0.3em;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s, transform 0.6s, color 0.3s;
+  z-index: 1;
+  user-select: none;
+}
+
+.intro-target.start {
+  opacity: 0;
+}
+
+.intro-target.sliding {
+  opacity: 1;
+  transform: scale(1);
+  color: #666;
+}
+
+.intro-target.clicking {
+  opacity: 1;
+  transform: scale(0.92);
+  color: #000;
+  text-shadow: 0 0 20px rgba(0,0,0,0.3);
+  transition: transform 0.12s, color 0.08s, text-shadow 0.08s;
+}
+
+.intro-target.ripple {
+  opacity: 0;
+  transform: scale(1.5);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+/* Cursor arrow — slides from left to the word */
+.intro-cursor {
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  transform-origin: 6px 2px; /* top-left tip of the arrow */
+}
+
+.intro-cursor.start {
+  left: -80px;
+  top: 55%;
+  opacity: 0;
+}
+
+.intro-cursor.sliding {
+  left: calc(50% + 30px);
+  top: calc(50% + 5px);
+  opacity: 1;
+  transform: scale(1);
+  transition: left 1.2s cubic-bezier(0.22, 0.61, 0.36, 1),
+              top 1.0s cubic-bezier(0.22, 0.61, 0.36, 1),
+              opacity 0.3s;
+}
+
+.intro-cursor.clicking {
+  left: calc(50% + 30px);
+  top: calc(50% + 5px);
+  opacity: 1;
+  animation: cursorPress 0.45s ease-in-out;
+}
+
+.intro-cursor.ripple {
+  left: calc(50% + 30px);
+  top: calc(50% + 5px);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Simple press-down then release — like a real mouse click */
+@keyframes cursorPress {
+  0%   { transform: scale(1) translateY(0); }
+  20%  { transform: scale(0.75) translateY(6px); }
+  40%  { transform: scale(0.7) translateY(8px); }
+  60%  { transform: scale(0.75) translateY(6px); }
+  80%  { transform: scale(0.95) translateY(1px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* Shockwave rings from click */
+.intro-shockwave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border-radius: 50%;
+  border: 2.5px solid #000;
+  z-index: 15;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.intro-shockwave.ring1 {
+  animation: shockwave 0.7s ease-out forwards;
+}
+
+.intro-shockwave.ring2 {
+  animation: shockwave 0.7s 0.08s ease-out forwards;
+  border-width: 2px;
+}
+
+.intro-shockwave.ring3 {
+  animation: shockwave 0.7s 0.16s ease-out forwards;
+  border-width: 1px;
+}
+
+@keyframes shockwave {
+  0% { opacity: 0.8; transform: scale(0); }
+  100% { opacity: 0; transform: scale(15); }
+}
+
+/* Flash before reveal — black flash on white bg for contrast */
+.intro-flash {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.intro-flash.active {
+  animation: flashIn 0.7s ease-out forwards;
+}
+
+@keyframes flashIn {
+  0% { opacity: 0; }
+  15% { opacity: 0.8; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+
+.intro-skip {
+  position: absolute;
+  bottom: 24px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: #bbb;
+  letter-spacing: 0.15em;
+  animation: pulse 2s ease-in-out infinite;
+}
+
 /* === RETRO MAC OS THEME === */
 
 .desktop {
