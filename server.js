@@ -98,7 +98,7 @@ app.get('/api/tweets', async (req, res) => {
 
   try {
     const url = new URL('https://api.twitter.com/2/tweets/search/recent');
-    url.searchParams.set('query', 'clickme.fun -is:retweet');
+    url.searchParams.set('query', 'click-me.fun -is:retweet');
     url.searchParams.set('max_results', '20');
     url.searchParams.set('tweet.fields', 'created_at,author_id,text');
     url.searchParams.set('expansions', 'author_id');

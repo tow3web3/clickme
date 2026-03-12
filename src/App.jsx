@@ -13,10 +13,6 @@ function getUid() {
   return uid
 }
 
-function getUserName() {
-  return localStorage.getItem('clickme_name') || ''
-}
-
 function ordinal(n) {
   const s = ['th', 'st', 'nd', 'rd']
   const v = n % 100
@@ -24,7 +20,7 @@ function ordinal(n) {
 }
 
 function buildTweetUrl(globalCount) {
-  const text = `I clicked in the correct place.\n\nYou do on average 1,007 clicks per day. Make sure you $CLICK here once a day and it might just change your life\n\nI'm the ${ordinal(globalCount)} clicker\n\n👉 clickme.fun`
+  const text = `I clicked in the correct place.\n\nYou do on average 1,007 clicks per day. Make sure you $CLICK here once a day and it might just change your life\n\nI'm the ${ordinal(globalCount)} clicker\n\n👉 click-me.fun`
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
 }
 
@@ -46,8 +42,6 @@ function App() {
   const [bumping, setBumping] = useState(false)
   const [particles, setParticles] = useState([])
   const [ripples, setRipples] = useState([])
-  const [showNameInput, setShowNameInput] = useState(!getUserName())
-  const [nameValue, setNameValue] = useState(getUserName())
   const [activeTab, setActiveTab] = useState('readme')
   const [introPhase, setIntroPhase] = useState('start') // start, sliding, clicking, ripple, done
 
@@ -120,12 +114,10 @@ function App() {
   }, [handlePageClick])
 
   const handleClick = (e) => {
-    const name = localStorage.getItem('clickme_name') || 'anon'
-
     fetch(`${API_URL}/clicks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uid: uid.current, name })
+      body: JSON.stringify({ uid: uid.current, name: 'anon' })
     })
       .then(r => r.json())
       .then(data => {
@@ -159,12 +151,6 @@ function App() {
     }, 900)
   }
 
-  const handleNameSubmit = (e) => {
-    e.preventDefault()
-    const name = nameValue.trim() || 'anon'
-    localStorage.setItem('clickme_name', name)
-    setShowNameInput(false)
-  }
 
   const formatNumber = (n) => {
     if (n === null) return '---'
@@ -340,28 +326,6 @@ function App() {
                   Make just <em>ONE</em> of your daily clicks worthwhile.<br />
                   Click your way to millions.
                 </p>
-
-                {/* Name input */}
-                {showNameInput && (
-                  <form className="name-form" onSubmit={handleNameSubmit}>
-                    <input
-                      type="text"
-                      value={nameValue}
-                      onChange={e => setNameValue(e.target.value)}
-                      placeholder="Enter your @handle..."
-                      className="name-input"
-                      maxLength={30}
-                      autoFocus
-                    />
-                    <button type="submit" className="name-btn">OK</button>
-                  </form>
-                )}
-
-                {!showNameInput && (
-                  <div className="user-info" onClick={() => setShowNameInput(true)}>
-                    clicking as <strong>{localStorage.getItem('clickme_name') || 'anon'}</strong> · {formatNumber(userClicks)} clicks
-                  </div>
-                )}
 
                 <div className="counter-section">
                   <div className={`counter-number ${bumping ? 'bump' : ''} ${count === null ? 'loading' : ''}`}>
