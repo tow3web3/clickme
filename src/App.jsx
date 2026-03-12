@@ -42,6 +42,7 @@ function App() {
   const [count, setCount] = useState(null)
   const [userClicks, setUserClicks] = useState(0)
   const [leaderboard, setLeaderboard] = useState([])
+  const [tweets, setTweets] = useState([])
   const [bumping, setBumping] = useState(false)
   const [particles, setParticles] = useState([])
   const [ripples, setRipples] = useState([])
@@ -78,6 +79,11 @@ function App() {
       .then(r => r.json())
       .then(data => setLeaderboard(data.leaderboard))
       .catch(() => {})
+
+    fetch(`${API_URL}/tweets`)
+      .then(r => r.json())
+      .then(data => setTweets(data.tweets || []))
+      .catch(() => {})
   }, [])
 
   // Poll for updates every 5s
@@ -91,6 +97,11 @@ function App() {
       fetch(`${API_URL}/leaderboard`)
         .then(r => r.json())
         .then(data => setLeaderboard(data.leaderboard))
+        .catch(() => {})
+
+      fetch(`${API_URL}/tweets`)
+        .then(r => r.json())
+        .then(data => setTweets(data.tweets || []))
         .catch(() => {})
     }, 5000)
     return () => clearInterval(interval)
@@ -390,7 +401,7 @@ function App() {
             </div>
           )}
 
-          {/* View / Leaderboard Window */}
+          {/* View / Leaderboard + Tweets Window */}
           {activeTab === 'view' && (
             <div className="window leaderboard-window">
               <div className="title-bar">
@@ -421,9 +432,30 @@ function App() {
                 ))}
               </div>
 
+              {tweets.length > 0 && (
+                <>
+                  <div className="tweets-section-title">Recent Tweets</div>
+                  <div className="tweets-feed">
+                    {tweets.map(t => (
+                      <a
+                        key={t.id}
+                        href={`https://x.com/${t.author.username}/status/${t.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="tweet-row"
+                      >
+                        <span className="tweet-author">@{t.author.username}</span>
+                        <span className="tweet-text">{t.text.length > 80 ? t.text.slice(0, 80) + '…' : t.text}</span>
+                        <span className="tweet-time">{timeAgo(t.created_at)}</span>
+                      </a>
+                    ))}
+                  </div>
+                </>
+              )}
+
               <div className="status-bar">
                 <span>Live · updates every 5s</span>
-                <span>{leaderboard.length} clickers</span>
+                <span>{leaderboard.length} clickers · {tweets.length} tweets</span>
               </div>
             </div>
           )}

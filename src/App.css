@@ -680,6 +680,57 @@
   color: #999;
 }
 
+/* Tweets feed */
+.tweets-section-title {
+  border-top: 2px solid #000;
+  padding: 6px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: #eee;
+}
+
+.tweets-feed {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.tweet-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 50px;
+  gap: 6px;
+  padding: 5px 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 10px;
+  text-decoration: none;
+  color: #000;
+  align-items: center;
+}
+
+.tweet-row:hover {
+  background: #f0f0f0;
+}
+
+.tweet-author {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tweet-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #444;
+}
+
+.tweet-time {
+  text-align: right;
+  color: #999;
+}
+
 /* Scrollbar retro style */
 .leaderboard-body::-webkit-scrollbar {
   width: 14px;

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import Database from 'better-sqlite3';
@@ -81,6 +82,53 @@ app.get('/api/leaderboard', (req, res) => {
     'SELECT name, clicks, last_click FROM users ORDER BY clicks DESC LIMIT 50'
   ).all();
   res.json({ leaderboard: rows });
+});
+
+// GET /api/tweets — recent tweets mentioning clickme.fun (cached 30s)
+let tweetCache = { data: [], ts: 0 };
+const TWEET_CACHE_TTL = 30000;
+
+app.get('/api/tweets', async (req, res) => {
+  const bearer = process.env.X_BEARER_TOKEN;
+  if (!bearer) return res.json({ tweets: [] });
+
+  if (Date.now() - tweetCache.ts < TWEET_CACHE_TTL) {
+    return res.json({ tweets: tweetCache.data });
+  }
+
+  try {
+    const url = new URL('https://api.twitter.com/2/tweets/search/recent');
+    url.searchParams.set('query', 'clickme.fun -is:retweet');
+    url.searchParams.set('max_results', '20');
+    url.searchParams.set('tweet.fields', 'created_at,author_id,text');
+    url.searchParams.set('expansions', 'author_id');
+    url.searchParams.set('user.fields', 'username,name,profile_image_url');
+
+    const resp = await fetch(url, {
+      headers: { Authorization: `Bearer ${bearer}` }
+    });
+    const json = await resp.json();
+
+    const users = {};
+    if (json.includes?.users) {
+      for (const u of json.includes.users) {
+        users[u.id] = { username: u.username, name: u.name, avatar: u.profile_image_url };
+      }
+    }
+
+    const tweets = (json.data || []).map(t => ({
+      id: t.id,
+      text: t.text,
+      created_at: t.created_at,
+      author: users[t.author_id] || { username: 'unknown', name: 'Unknown' }
+    }));
+
+    tweetCache = { data: tweets, ts: Date.now() };
+    res.json({ tweets });
+  } catch (err) {
+    console.error('Twitter API error:', err.message);
+    res.json({ tweets: tweetCache.data });
+  }
 });
 
 // Serve static build in production
